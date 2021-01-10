@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.JsonPatch;
 
 namespace HRPoratalServerApp.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class EmployeeController : ControllerBase
     {
@@ -28,17 +28,21 @@ namespace HRPoratalServerApp.Controllers
         }
 
         [HttpGet]
+        [ActionName("Get")]
         public IEnumerable<Employee> Get() =>_empreo.Employees;
 
-        [HttpGet("api/AllEmps")]
+        [HttpGet]
+        [ActionName("AllEmps")]
         public IEnumerable<Employee> AllEmps() => _empreo.Employees;
 
 
         [HttpGet("{id}")]
+        [ActionName("GetEmpByID")]
         public Employee GetEmpByID(int id) => _empreo[id];
 
 
         [HttpPost]
+        [ActionName("Postemp")]
         public Employee Postemp([FromBody] Employee emp) => _empreo.AddEmp(new Employee
         {
 
@@ -54,11 +58,13 @@ namespace HRPoratalServerApp.Controllers
 
 
         [HttpDelete("{id}")]
+        [ActionName("DeleteempId")]
         public void DeleteempId(int id) => _empreo.DeleteEmp(id);
 
 
 
         [HttpPut("{id:int}")]
+        [ActionName("PutEmp")]
         public Employee PutEmp(int id,[FromBody] Employee emp) => _empreo.updateEmp(new Employee
         {
 
