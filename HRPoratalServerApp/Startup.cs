@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HRPoratalServerApp.Repositories;
+using HRPoratalServerApp.Models;
 
 namespace HRPoratalServerApp
 {
@@ -24,11 +25,12 @@ namespace HRPoratalServerApp
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services,IConfiguration configuration)
         {
             
 
             services.AddSingleton<IEmpRepo, EmpRepo>();
+            services.ConfigureDBConnection(configuration);
             services.AddControllersWithViews();
 
         }
