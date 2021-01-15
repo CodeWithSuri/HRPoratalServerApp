@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using HRPoratalServerApp.RepositoryPattren;
 
 namespace HRPoratalServerApp.Models
 {
@@ -12,13 +13,20 @@ namespace HRPoratalServerApp.Models
     {
 
 
-        public static void ConfigureDBConnection(this IServiceCollection services,IConfiguration configuration)
-        {
+        //public static void ConfigureDBConnection(this IServiceCollection services,IConfiguration configuration)
+        //{
 
-            var connstring = configuration["HRComPortalDbContextConnection"];
+        //    var connstring = configuration["HRComPortalDbContextConnection"];
 
-            services.AddDbContext<RepositryPattrenContext>(con => con.UseSqlServer(connstring));
+        //    services.AddDbContext<RepositryPattrenContext>(con => con.UseSqlServer(connstring));
            
-        }
+        //}
+
+
+        //public static void ConfigureRepoWrapper(this IServiceCollection services)
+        //{
+
+           
+        //}
     }
 }

@@ -18,10 +18,11 @@ namespace HRPoratalServerApp.RepositoryPattren
             this.repositoryContext = pattrenContext;
         }
 
-
-        public  void Create(T entity)
+        public  T Create(T entity)
         {
             this.repositoryContext.Set<T>().Add(entity);
+
+            return entity;
         }
 
 
@@ -39,9 +40,11 @@ namespace HRPoratalServerApp.RepositoryPattren
 return   this.repositoryContext.Set<T>().AsNoTracking();
 
         }
-        public  void Update(T entity)
+        public  T Update(T entity)
         {
             this.repositoryContext.Set<T>().Update(entity);
+
+            return entity;
         }
 
     }

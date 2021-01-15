@@ -8,6 +8,7 @@ using HRPoratalServerApp.Repositories;
 using HRPoratalServerApp.Models;
 using Microsoft.Extensions.Primitives;
 using Microsoft.AspNetCore.JsonPatch;
+using HRPoratalServerApp.RepositoryPattren;
 
 namespace HRPoratalServerApp.Controllers
 {
@@ -16,34 +17,38 @@ namespace HRPoratalServerApp.Controllers
     public class EmployeeController : ControllerBase
     {
 
+        private IRepositoryWrapper _repositoryWrapper;
 
-        private IEmpRepo _empreo;
+        //private IEmpRepo _empreo;
 
 
-        public EmployeeController(IEmpRepo empRepo)
+        //  public EmployeeController(IEmpRepo empRepo,)
+        public EmployeeController(IRepositoryWrapper repositoryWrapper)
         {
 
 
-            _empreo = empRepo;
+            _repositoryWrapper = repositoryWrapper;
         }
+
+
 
         [HttpGet]
         [ActionName("Get")]
-        public IEnumerable<Employee> Get() =>_empreo.Employees;
+        public IQueryable<Employee> Get() =>_repositoryWrapper.employeeRepositry.GetAllData();
 
         [HttpGet]
         [ActionName("AllEmps")]
-        public IEnumerable<Employee> AllEmps() => _empreo.Employees;
+        public IEnumerable<Employee> AllEmps() => _repositoryWrapper.employeeRepositry.GetAllData();
 
 
         [HttpGet("{id}")]
         [ActionName("GetEmpByID")]
-        public Employee GetEmpByID(int id) => _empreo[id];
+        public IQueryable<Employee> GetEmpByID(int id) => _repositoryWrapper.employeeRepositry.FindByCondition(emp=>emp.EmployeeId.Equals(id));
 
 
         [HttpPost]
         [ActionName("Postemp")]
-        public Employee Postemp([FromBody] Employee emp) => _empreo.AddEmp(new Employee
+        public Employee Postemp([FromBody] Employee emp) => _repositoryWrapper.employeeRepositry.Create(new Employee
         {
 
             Department=emp.Department,
@@ -59,13 +64,13 @@ namespace HRPoratalServerApp.Controllers
 
         [HttpDelete("{id}")]
         [ActionName("DeleteempId")]
-        public void DeleteempId(int id) => _empreo.DeleteEmp(id);
+        public void DeleteempId([FromBody] Employee emp) => _repositoryWrapper.employeeRepositry.Delete(emp);
 
 
 
         [HttpPut("{id:int}")]
         [ActionName("PutEmp")]
-        public Employee PutEmp(int id,[FromBody] Employee emp) => _empreo.updateEmp(new Employee
+        public Employee PutEmp(int id,[FromBody] Employee emp) => _repositoryWrapper.employeeRepositry.Update(new Employee
         {
 
             Department = emp.Department,

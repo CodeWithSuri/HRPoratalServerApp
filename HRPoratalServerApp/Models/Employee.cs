@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace HRPoratalServerApp.Models
 {
  
-    [Table("Employee")]
+    [Table("Employees")]
     public class Employee
     {
 

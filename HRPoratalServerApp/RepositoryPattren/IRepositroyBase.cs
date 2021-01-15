@@ -13,8 +13,8 @@ namespace HRPoratalServerApp.RepositoryPattren
         IQueryable<T> GetAllData();
 
         IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
-        void Create(T entity);
-        void Update(T entity);
+        T Create(T entity);
+        T Update(T entity);
         void Delete(T entity);
 
     }
