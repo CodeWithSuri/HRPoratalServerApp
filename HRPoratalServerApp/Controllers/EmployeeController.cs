@@ -9,11 +9,13 @@ using HRPoratalServerApp.Models;
 using Microsoft.Extensions.Primitives;
 using Microsoft.AspNetCore.JsonPatch;
 using HRPoratalServerApp.RepositoryPattren;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HRPoratalServerApp.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class EmployeeController : ControllerBase
     {
 

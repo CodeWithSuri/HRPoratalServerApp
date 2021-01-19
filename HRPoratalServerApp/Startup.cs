@@ -14,6 +14,9 @@ using HRPoratalServerApp.Repositories;
 using HRPoratalServerApp.Models;
 using HRPoratalServerApp.RepositoryPattren;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace HRPoratalServerApp
 {
@@ -29,7 +32,7 @@ namespace HRPoratalServerApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
 
 
             /**Add custoum extenstion methods to service */
@@ -41,7 +44,37 @@ namespace HRPoratalServerApp
 
             /**Add custoum extenstion methods to service */
 
+            
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }
+                ).AddJwtBearer(options =>
+                {
+
+                    options.SaveToken = true;
+
+                    options.RequireHttpsMetadata = true;
+
+                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                    {
+
+
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidIssuer = "http://localhost:54552/",
+                        ValidAudience = "http://localhost:54552/",
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Amar00547455Amar"))
+                    };
+
+                });
+
             services.AddControllersWithViews();
+
 
         }
 
@@ -59,6 +92,7 @@ namespace HRPoratalServerApp
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
