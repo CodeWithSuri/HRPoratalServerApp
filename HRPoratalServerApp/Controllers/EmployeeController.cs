@@ -38,10 +38,28 @@ namespace HRPoratalServerApp.Controllers
         [ActionName("Get")]
         public IQueryable<Employee> Get() =>_repositoryWrapper.employeeRepositry.GetAllData();
 
+
         [HttpGet]
         [ActionName("AllEmps")]
-        public IEnumerable<Employee> AllEmps() => _repositoryWrapper.employeeRepositry.GetAllData();
+        public IEnumerable<Employee> AllEmps() {
 
+            var claims = HttpContext.User.Claims;
+
+
+            IEnumerable<Employee> allemp = _repositoryWrapper.employeeRepositry.GetAllData();
+
+
+            //Searching the list object based on the claims information 
+
+            IEnumerable<Employee> allemp1 =     allemp.Where(
+                 
+                 t=>t.FirstName== claims.FirstOrDefault(u => u.Type == "Name").Value
+                 
+                 );
+
+            return allemp1;
+
+        }
 
         [HttpGet("{id}")]
         [ActionName("GetEmpByID")]
